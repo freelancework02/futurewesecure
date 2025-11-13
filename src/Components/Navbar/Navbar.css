@@ -1,0 +1,115 @@
+/* Theme: We Plan Future — Orange / Navy / White */
+:root {
+  --wp-bg-top: rgb(255, 255, 255);
+  --wp-bg-scrolled: rgba(255, 255, 255, 0.96);
+  --wp-text: black; /* Deep navy */
+  --wp-muted: black; /* Slate grey */
+  --wp-accent: #f37021; /* Orange primary */
+  --wp-accent-600: #d95800;
+  --wp-underline: rgba(243, 112, 33, 0.3);
+  --wp-shadow: 0 6px 20px rgba(11, 55, 96, 0.08);
+}
+
+/* Header surfaces */
+.navbar-root--light {
+  color: var(--wp-text);
+  -webkit-backdrop-filter: saturate(160%) blur(6px);
+  backdrop-filter: saturate(160%) blur(6px);
+}
+.navbar--top {
+  background: var(--wp-bg-top);
+  border-bottom: 1px solid rgba(11, 55, 96, 0.06);
+}
+.navbar--scrolled {
+  background: var(--wp-bg-scrolled);
+  border-bottom: 1px solid rgba(11, 55, 96, 0.12);
+  box-shadow: var(--wp-shadow);
+}
+
+/* Drawer surface */
+.drawer-surface--light {
+  background: #ffffff;
+}
+
+/* Logo sizing */
+.logo {
+  height: 144px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 200ms ease, height 200ms ease, opacity 200ms ease;
+}
+.logo--lg {
+  height: 180px;
+}
+.logo--sm {
+  height: 160px;
+  transform: translateY(-1px);
+}
+
+/* Wordmark */
+.brand-wordmark--dark {
+  color: var(--wp-text);
+  font-weight: 600;
+}
+
+/* Links */
+.nav-link--light {
+  color: var(--wp-muted);
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease;
+  position: relative;
+}
+.nav-link--light:hover {
+  color: var(--wp-accent);
+}
+.nav-link--active {
+  color: var(--wp-text);
+  font-weight: 600;
+}
+
+/* Underline (desktop) */
+.nav-underline--light {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 2px;
+  background: transparent;
+  border-radius: 999px;
+  transition: background 160ms ease, transform 160ms ease, opacity 160ms ease;
+  opacity: 0;
+  transform: scaleX(0.6);
+}
+.nav-link--light:hover .nav-underline--light {
+  background: var(--wp-underline);
+  opacity: 1;
+  transform: scaleX(1);
+}
+.nav-link--active .nav-underline--light {
+  background: linear-gradient(90deg, var(--wp-accent), var(--wp-accent-600));
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Mobile tap targets */
+.nav-link--light.mobile {
+  padding: 14px 20px;
+}
+
+/* Drawer Footer links */
+.drawer-footer a {
+  color: var(--wp-text);
+}
+.drawer-footer a:hover {
+  background: rgba(243, 112, 33, 0.08);
+  color: var(--wp-accent);
+}
+
+/* Focus rings (accessibility) */
+.nav-link--light:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(243, 112, 33, 0.45);
+  outline-offset: 2px;
+  border-radius: 12px;
+}

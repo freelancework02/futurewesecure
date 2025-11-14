@@ -12,7 +12,7 @@ export default function ProductcardVariantB() {
   const openCalendly = () => {
     const openPopup = () =>
       window.Calendly?.initPopupWidget?.({
-        url: "https://calendly.com/jack-weplanfuture/60min",
+        url: "https://calendly.com/futurewesecure-info/30min",
       });
 
     if (calendlyReadyRef.current && window.Calendly) {
@@ -166,9 +166,15 @@ export default function ProductcardVariantB() {
                 <div className="mt-5 flex items-center justify-between">
                   <button
                     onClick={(e) => {
-                      e.preventDefault();
-                      openCalendly();
-                    }}
+                e.preventDefault();
+                // if you use Calendly or similar, call popup here
+                if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                  window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                } else {
+                  // fallback to a route or external link — adjust as needed
+                  window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                }
+              }}
                     className="inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-semibold shadow-sm transition-all"
                     style={{
                       background: `linear-gradient(90deg, ${orange}, ${orangeDark})`,
@@ -186,7 +192,17 @@ export default function ProductcardVariantB() {
 
               {/* Floating Badge (fixed positioning) */}
               <span
-                className="absolute right-4 bottom-4 rounded-full px-3 py-1.5 text-xs font-semibold text-white shadow-md"
+               onClick={(e) => {
+                e.preventDefault();
+                // if you use Calendly or similar, call popup here
+                if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                  window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                } else {
+                  // fallback to a route or external link — adjust as needed
+                  window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                }
+              }}
+                className="cursor-pointer absolute right-4 bottom-4 rounded-full px-3 py-1.5 text-xs font-semibold text-white shadow-md"
                 style={{
                   background: `linear-gradient(90deg, ${orange}, ${orangeDark})`,
                 }}

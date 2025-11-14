@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// FoundationalCommitments.VariantA.jsx
+import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, Mail, HelpCircle } from "lucide-react";
 import faqimg from "../../assets/faqimg.jpg";
 
@@ -31,159 +32,137 @@ const commitmentsData = [
   },
 ];
 
-const FoundationalCommitments = () => {
-  const [openItem, setOpenItem] = useState(null);
-  const toggleItem = (index) => setOpenItem(openItem === index ? null : index);
-
+export default function FoundationalCommitmentsVariantA() {
+  const [open, setOpen] = useState(null);
   const orange = "#f37021";
-  const orangeDark = "#d95800";
+  const orangeSoft = "rgba(243,112,33,0.08)";
   const black = "#0f0f0f";
+
+  // for accessible height animation
+  const contentRefs = useRef({});
+
+  useEffect(() => {
+    // set maxHeight for open panel
+    Object.keys(contentRefs.current).forEach((k) => {
+      const el = contentRefs.current[k];
+      if (!el) return;
+      if (Number(k) === open) {
+        el.style.maxHeight = el.scrollHeight + "px";
+      } else {
+        el.style.maxHeight = "0px";
+      }
+    });
+  }, [open]);
 
   return (
     <section
       id="faq"
-      className="py-16 px-6 md:px-10"
-      style={{
-        background:
-          "linear-gradient(180deg, #ffffff 0%, #fff5ed 50%, #ffffff 100%)",
-      }}
+      className="py-16 px-6 md:px-10 bg-gradient-to-b from-white via-[#fff5ed] to-white"
     >
       {/* Header */}
-      <div className="text-center mb-14">
-        <h2
-          className="text-sm uppercase tracking-[0.20em] font-semibold mb-3"
-          style={{ color: orange }}
-        >
+      <div className="text-center mb-12 max-w-4xl mx-auto">
+        <h2 className="text-sm uppercase tracking-widest font-semibold mb-2" style={{ color: orange }}>
           Frequently Asked Questions
         </h2>
-
-        <h1
-          className="text-3xl md:text-4xl lg:text-5xl font-extrabold"
-          style={{ color: black }}
-        >
-          Everything You Want to Know
+        <h1 className="text-3xl md:text-4xl font-extrabold" style={{ color: black }}>
+          Everything you want to know
         </h1>
-
-        <p className="text-black/70 mt-3 text-lg max-w-2xl mx-auto">
-          Here’s what people commonly ask before working with us.
-        </p>
+        <p className="text-black/70 mt-3 text-base md:text-lg">Here’s what people commonly ask before working with us.</p>
       </div>
 
-      {/* Main Layout */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
-        {/* LEFT — Accordion */}
-        <div className="w-full">
-          {commitmentsData.map((item, index) => {
-            const isOpen = openItem === index;
-
+      {/* Layout */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        {/* Accordion column */}
+        <div>
+          {commitmentsData.map((item, i) => {
+            const isOpen = open === i;
             return (
               <div
-                key={index}
-                className={`mb-3 rounded-2xl border transition-all overflow-hidden shadow-sm ${
-                  isOpen
-                    ? `border-[${orange}] shadow-[0_8px_24px_-10px_rgba(243,112,33,0.35)] bg-white`
-                    : "border-black/10 bg-white/80 hover:bg-white"
-                }`}
+                key={i}
+                className={`mb-4 rounded-2xl overflow-hidden transition-shadow ${isOpen ? "shadow-lg" : "shadow-sm"}`}
+                style={{
+                  border: isOpen ? `1px solid ${orange}` : "1px solid rgba(0,0,0,0.08)",
+                  background: isOpen ? "white" : "linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.9))",
+                }}
               >
                 <button
-                  onClick={() => toggleItem(index)}
-                  className="flex w-full items-center justify-between px-6 py-5 text-left"
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${i}`}
+                  className="w-full flex items-start gap-4 px-5 py-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-200"
                 >
-                  <span
-                    className="text-base md:text-lg font-semibold pr-4"
-                    style={{ color: black }}
-                  >
-                    {item.title}
-                  </span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-base md:text-lg" style={{ color: black }}>
+                        {item.title}
+                      </h3>
+                    </div>
+                    {/* <div className="mt-2 text-sm text-black/70 line-clamp-3">{item.content}</div> */}
+                  </div>
 
                   <ChevronDown
-                    className={`h-6 w-6 transition-transform duration-300 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
+                    className={`w-6 h-6 transform transition-transform ${isOpen ? "rotate-180" : ""}`}
                     style={{ color: orange }}
+                    aria-hidden="true"
                   />
                 </button>
 
+                {/* animated content */}
                 <div
-                  className={`grid transition-all duration-300 ease-in-out ${
-                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                  }`}
+                  id={`faq-panel-${i}`}
+                  ref={(el) => (contentRefs.current[i] = el)}
+                  className="px-5 overflow-hidden transition-max-h duration-300 ease-in-out"
+                  style={{ maxHeight: 0 }}
                 >
-                  <div className="overflow-hidden px-6 pb-5">
-                    <p className="text-black/70 leading-relaxed text-[16px]">
-                      {item.content}
-                    </p>
-                  </div>
+                  <div className="py-4 pb-6 text-sm text-black/75">{item.content}</div>
                 </div>
               </div>
             );
           })}
+
+          {/* CTA */}
+          <div className="mt-6">
+            <div className="inline-flex items-center gap-4 px-5 py-4 rounded-2xl shadow-sm border bg-white">
+              <Mail className="w-5 h-5" style={{ color: orange }} />
+              <div className="text-sm text-black/85">
+                Still have questions? Email{" "}
+                <a href="mailto:Info@futurewesecure.com" className="font-semibold" style={{ color: orange }}>
+                 Info@futurewesecure.com
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* RIGHT — Image Block */}
+        {/* Image column */}
         <div className="relative flex justify-center items-center">
-          <div className="relative w-full h-[380px] md:h-[480px] rounded-2xl overflow-hidden shadow-xl">
+          <div className="relative w-full h-[380px] md:h-[520px] rounded-xl overflow-hidden shadow-xl">
             <img
               src={faqimg}
               alt="Client consulting financial expert"
-              className="w-full h-full object-cover rounded-2xl transform hover:scale-105 transition-transform duration-700"
+              className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
             />
 
-            {/* Orange Gradient Overlay */}
             <div
-              className="absolute inset-0 rounded-2xl"
-              style={{
-                background: "linear-gradient(to top, rgba(15,15,15,0.55), transparent)",
-              }}
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: "linear-gradient(to top, rgba(15,15,15,0.45), transparent)" }}
             />
 
-            {/* Floating Badge */}
             <div
-              className="absolute bottom-5 left-5 px-5 py-4 rounded-xl shadow-lg backdrop-blur-md border"
-              style={{
-                background: "rgba(255,255,255,0.95)",
-                borderColor: "rgba(0,0,0,0.1)",
-              }}
+              className="absolute bottom-6 left-6 rounded-xl px-4 py-3 shadow-lg bg-white border"
+              style={{ borderColor: "rgba(0,0,0,0.06)" }}
             >
-              <p
-                className="font-semibold text-base flex items-center gap-2"
-                style={{ color: black }}
-              >
+              <div className="flex items-center gap-3">
                 <HelpCircle className="w-5 h-5" style={{ color: orange }} />
-                Trusted by 1,200+ families
-              </p>
-              <p className="text-sm text-black/60">
-                Real guidance. Real clarity. Real results.
-              </p>
+                <div>
+                  <div className="font-semibold text-sm">Trusted by 1,200+ families</div>
+                  <div className="text-xs text-black/60">Real guidance. Real clarity. Real results.</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Contact CTA */}
-      <div className="text-center mt-14">
-        <div
-          className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl shadow-sm hover:shadow-md transition-all border"
-          style={{
-            background: "white",
-            borderColor: "rgba(0,0,0,0.1)",
-          }}
-        >
-          <Mail className="w-5 h-5" style={{ color: orange }} />
-          <span className="text-lg text-black/80">
-            Still have questions? Email us at{" "}
-            <a
-              href="mailto:Jack@weplanfuture.com"
-              className="font-semibold hover:underline"
-              style={{ color: orange }}
-            >
-              Jack@weplanfuture.com
-            </a>
-          </span>
-        </div>
-      </div>
     </section>
   );
-};
-
-export default FoundationalCommitments;
+}

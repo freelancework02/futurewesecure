@@ -284,7 +284,7 @@ const ContactSection = () => {
 
               <div className="grid sm:grid-cols-2 gap-3">
                 <a
-                  href="mailto:Jack@weplanfuture.com"
+                  href="mailto:Info@futurewesecure.com"
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/6 px-4 py-3 hover:bg-white/12 transition text-white"
                 >
                   <Mail size={18} />
@@ -292,7 +292,7 @@ const ContactSection = () => {
                 </a>
 
                 <a
-                  href="tel:+17813338353"
+                  href="tel:+1516-917-0756"
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/6 px-4 py-3 hover:bg-white/12 transition text-white"
                 >
                   <Phone size={18} />
@@ -301,7 +301,7 @@ const ContactSection = () => {
               </div>
 
               <a
-                href="https://api.whatsapp.com/send?phone=17813338353&text=Hello!"
+                href="https://api.whatsapp.com/send?phone=15165818909&text=Hello!"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 w-full inline-flex items-center justify-center gap-3 rounded-xl px-4 py-3 text-white font-semibold"
@@ -317,7 +317,7 @@ const ContactSection = () => {
               <button
                 onClick={() =>
                   window.Calendly?.initPopupWidget?.({
-                    url: "https://calendly.com/jack-weplanfuture/60min",
+                    url: "https://calendly.com/futurewesecure-info/30min",
                   })
                 }
                 className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold border border-white/50 text-black bg-white"
@@ -336,13 +336,13 @@ const ContactSection = () => {
                 backdropFilter: "blur(6px)",
               }}
             >
-              <h4 className="text-xl font-semibold mb-1 text-white">We Plan Future</h4>
-              <p className="text-white/90">📞 781-333-8353</p>
-              <p className="text-white/90">📧 Jack@weplanfuture.com</p>
+              <h4 className="text-xl font-semibold mb-1 text-white">Future We Secure</h4>
+              <p className="text-white/90">📞 516-917-0756</p>
+              <p className="text-white/90">📧 Info@futurewesecure.com</p>
 
               <div className="flex items-center gap-2 mt-2 text-white/80">
                 <MapPin size={18} />
-                <span>Virtual consultations & by-appointment sessions</span>
+                <span>Mount Airy, MD</span>
               </div>
             </div>
           </div>
@@ -350,7 +350,7 @@ const ContactSection = () => {
 
         {/* Footer */}
         <div className="mt-14 text-center text-white/80 text-sm border-t border-white/10 pt-6">
-          © {new Date().getFullYear()} We Plan Future. All Rights Reserved.
+          © {new Date().getFullYear()} Future We Secure. All Rights Reserved.
         </div>
       </div>
     </section>

@@ -1,10 +1,15 @@
 import React from "react";
-import image from "../../assets/image3.png";
+import image from "../../assets/ashesh.jpeg";
 
 export default function AboutUs() {
   const orange = "#f37021";
   const orangeDark = "#d95800";
   const black = "#0f0f0f";
+
+  // lightweight SVG placeholder (keeps layout if image fails to load)
+  const placeholder = `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'><rect width='100%' height='100%' fill='%23ffffff'/><g fill='%23f37021' opacity='0.12'><circle cx='400' cy='400' r='250'/></g><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='28' fill='%23000000' opacity='0.25'>Image unavailable</text></svg>`
+  )}`;
 
   return (
     <section
@@ -62,15 +67,12 @@ export default function AboutUs() {
           <div className="flex flex-col-reverse md:flex-row items-center md:items-start gap-10 md:gap-14">
             {/* LEFT: Text */}
             <div className="md:w-1/2 space-y-6">
-              <h2
-                className="text-2xl font-semibold"
-                style={{ color: black }}
-              >
+              <h2 className="text-2xl font-semibold" style={{ color: black }}>
                 Our Mission
               </h2>
 
               <p className="text-black/70 leading-relaxed">
-                At We Plan Future, we understand that personal finances can be
+                At Future We Secure,  we understand that personal finances can be
                 overwhelming—especially when most people never receive formal
                 education on the subject. Our mission is to empower you with the
                 knowledge and tools needed to take control of your financial
@@ -103,20 +105,22 @@ export default function AboutUs() {
                   }}
                 />
                 <div className="flex flex-wrap gap-2">
-                  {["Education First", "Personalized Planning", "Ongoing Support"].map(
-                    (badge, i) => (
-                      <span
-                        key={i}
-                        className="text-xs font-medium px-3 py-1 rounded-full border bg-white"
-                        style={{
-                          borderColor: "rgba(0,0,0,0.15)",
-                          color: black,
-                        }}
-                      >
-                        {badge}
-                      </span>
-                    )
-                  )}
+                  {[
+                    "Education First",
+                    "Personalized Planning",
+                    "Ongoing Support",
+                  ].map((badge, i) => (
+                    <span
+                      key={i}
+                      className="text-xs font-medium px-3 py-1 rounded-full border bg-white"
+                      style={{
+                        borderColor: "rgba(0,0,0,0.15)",
+                        color: black,
+                      }}
+                    >
+                      {badge}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -144,10 +148,26 @@ export default function AboutUs() {
                   }}
                 >
                   <div className="w-full h-full rounded-full overflow-hidden border bg-white">
+                    {/*
+                      Image adjustments:
+                      - object-cover to preserve aspect and fill the circle
+                      - loading="lazy" + decoding for better perf
+                      - onError fallback to placeholder if import fails
+                    */}
                     <img
                       src={image}
-                      alt="Founder Jack Patel"
-                      className="w-full h-full object-cover"
+                      alt="Ashish Patel — Founder"
+                      loading="lazy"
+                      decoding="async"
+                      role="img"
+                      onError={(e) => {
+                        // show placeholder SVG data URI if the imported image can't be loaded
+                        // @ts-ignore
+                        e.currentTarget.onerror = null;
+                        // @ts-ignore
+                        e.currentTarget.src = placeholder;
+                      }}
+                      className="w-full h-full object-cover object-center"
                     />
                   </div>
                 </div>
@@ -160,15 +180,10 @@ export default function AboutUs() {
               >
                 Founder
               </h2>
-              <h3
-                className="text-2xl md:text-3xl font-extrabold"
-                style={{ color: black }}
-              >
-                Jack Patel
+              <h3 className="text-2xl md:text-3xl font-extrabold" style={{ color: black }}>
+                Ashish Patel
               </h3>
-              <p className="text-black/60 text-sm md:text-base">
-                (License Number – 21322826)
-              </p>
+              <p className="text-black/60 text-sm md:text-base">(License Number – 21322826)</p>
 
               {/* Accent line */}
               <div

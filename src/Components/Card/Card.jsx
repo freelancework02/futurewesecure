@@ -170,7 +170,17 @@ export default function ProfessionalServices() {
                 {/* CTA + micro link row */}
                 <div className="mt-6 flex items-center justify-between gap-3">
                   <a
-                    href="#contact"
+                    href="#"
+                     onClick={(e) => {
+                e.preventDefault();
+                // if you use Calendly or similar, call popup here
+                if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                  window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                } else {
+                  // fallback to a route or external link — adjust as needed
+                  window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                }
+              }}
                     className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-shadow shadow-sm"
                     style={{
                       background: `linear-gradient(90deg, ${orange}, ${orangeDark})`,
@@ -186,7 +196,17 @@ export default function ProfessionalServices() {
                   </a>
 
                   <a
-                    href="#learn"
+                    href="#"
+                     onClick={(e) => {
+                e.preventDefault();
+                // if you use Calendly or similar, call popup here
+                if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                  window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                } else {
+                  // fallback to a route or external link — adjust as needed
+                  window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                }
+              }}
                     className="text-sm text-black/70 hover:text-black/90 transition"
                     aria-label={`Learn more about ${s.title}`}
                   >
@@ -219,15 +239,15 @@ export default function ProfessionalServices() {
 
           <div className="flex gap-3">
             <a
-              href="#book"
+              href="#"
               onClick={(e) => {
                 e.preventDefault();
                 // if you use Calendly or similar, call popup here
                 if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
-                  window.Calendly.initPopupWidget({ url: "https://calendly.com/jack-weplanfuture/60min" });
+                  window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
                 } else {
                   // fallback to a route or external link — adjust as needed
-                  window.open("https://calendly.com/jack-weplanfuture/60min", "_blank", "noopener,noreferrer");
+                  window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
                 }
               }}
               className="inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold"
@@ -241,7 +261,17 @@ export default function ProfessionalServices() {
             </a>
 
             <a
-              href="#contact"
+              href="#"
+               onClick={(e) => {
+                e.preventDefault();
+                // if you use Calendly or similar, call popup here
+                if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                  window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                } else {
+                  // fallback to a route or external link — adjust as needed
+                  window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                }
+              }}
               className="inline-flex items-center gap-2 rounded-full px-5 py-3 border border-black/8 text-sm font-semibold text-black/80 bg-white"
             >
               Contact Us

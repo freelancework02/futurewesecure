@@ -150,7 +150,7 @@ export default function Home() {
             onClick={(e) => {
               e.preventDefault();
               window.Calendly?.initPopupWidget?.({
-                url: "https://calendly.com/jack-weplanfuture/60min",
+                url: "https://calendly.com/futurewesecure-info/30min",
               });
             }}
             className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold shadow-md hover:shadow-lg transition-transform text-white"

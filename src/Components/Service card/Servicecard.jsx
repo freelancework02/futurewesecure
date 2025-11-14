@@ -60,14 +60,23 @@ export default function ServicecardVariantA() {
                   <a
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white font-semibold"
                     href="#"
-                    onClick={(e) => { e.preventDefault(); window.Calendly?.initPopupWidget?.({ url: "https://calendly.com/jack-weplanfuture/60min" }) }}
+                     onClick={(e) => {
+                e.preventDefault();
+                // if you use Calendly or similar, call popup here
+                if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
+                  window.Calendly.initPopupWidget({ url: "https://calendly.com/futurewesecure-info/30min" });
+                } else {
+                  // fallback to a route or external link — adjust as needed
+                  window.open("https://calendly.com/futurewesecure-info/30min", "_blank", "noopener,noreferrer");
+                }
+              }}
                     style={{ background: `linear-gradient(90deg, ${orange}, ${orangeDark})` }}
                   >
                     Book a review
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h12M12 5l7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </a>
 
-                  <a className="text-sm text-black/70 hover:text-black" href="#"  onClick={(e) => { e.preventDefault(); window.Calendly?.initPopupWidget?.({ url: "https://calendly.com/jack-weplanfuture/60min" }) }}>Learn more →</a>
+                  <a className="text-sm text-black/70 hover:text-black" href="#"  onClick={(e) => { e.preventDefault(); window.Calendly?.initPopupWidget?.({ url: "https://calendly.com/futurewesecure-info/30min" }) }}>Learn more →</a>
                 </div>
               </div>
             </article>

@@ -9,7 +9,7 @@ import {
   ArrowRight,
   Calendar,
 } from "lucide-react";
-import img from "../../assets/image3.png";
+import img from "../../assets/Herosection.png";
 
 /* Calendly loader (idempotent) */
 function useCalendlyLoader() {
@@ -41,18 +41,18 @@ const HeroSection = ({ topOffset = 88 }) => {
     try {
       if (window.Calendly?.initPopupWidget) {
         window.Calendly.initPopupWidget({
-          url: "https://calendly.com/jack-weplanfuture/60min",
+          url: "https://calendly.com/futurewesecure-info/30min",
         });
       } else {
         window.open(
-          "https://calendly.com/jack-weplanfuture/60min",
+          "https://calendly.com/futurewesecure-info/30min",
           "_blank",
           "noopener,noreferrer"
         );
       }
     } catch {
       window.open(
-        "https://calendly.com/jack-weplanfuture/60min",
+        "https://calendly.com/futurewesecure-info/30min",
         "_blank",
         "noopener,noreferrer"
       );
@@ -178,17 +178,17 @@ const HeroSection = ({ topOffset = 88 }) => {
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5" style={{ color: accentFrom }} aria-hidden="true" />
                 <a
-                  href="mailto:Jack@weplanfuture.com"
+                  href="mailto:Info@futurewesecure.com"
                   className="text-white/90 font-medium hover:underline"
                 >
-                  Jack@weplanfuture.com
+                  Info@futurewesecure.com
                 </a>
               </div>
 
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5" style={{ color: accentFrom }} aria-hidden="true" />
-                <a href="tel:+17813338353" className="text-white/90 font-medium">
-                  781-333-8353
+                <a href="tel:+1516-917-0756" className="text-white/90 font-medium">
+                  516-917-0756
                 </a>
               </div>
             </div>

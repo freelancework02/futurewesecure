@@ -50,7 +50,7 @@
 
 //   const openCalendly = () => {
 //     window.Calendly?.initPopupWidget?.({
-//       url: "https://calendly.com/jack-weplanfuture/60min",
+//       url: "https://calendly.com/futurewesecure-info/30min",
 //     });
 //   };
 
@@ -202,7 +202,7 @@ export default function PartnerProgramVariantA() {
   const openCalendly = () => {
     const openPopup = () =>
       window.Calendly?.initPopupWidget?.({
-        url: "https://calendly.com/jack-weplanfuture/60min",
+        url: "https://calendly.com/futurewesecure-info/30min",
       });
 
     if (calendlyReadyRef.current && window.Calendly) return openPopup();

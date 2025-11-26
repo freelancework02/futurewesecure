@@ -167,7 +167,7 @@ export default function AboutUs() {
                         // @ts-ignore
                         e.currentTarget.src = placeholder;
                       }}
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
                 </div>
@@ -183,7 +183,7 @@ export default function AboutUs() {
               <h3 className="text-2xl md:text-3xl font-extrabold" style={{ color: black }}>
                 Ashish Patel
               </h3>
-              <p className="text-black/60 text-sm md:text-base">(License Number – 21322826)</p>
+              <p className="text-black/60 text-sm md:text-base">(License Number – 3003442961)</p>
 
               {/* Accent line */}
               <div

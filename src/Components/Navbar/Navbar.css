@@ -33,7 +33,7 @@
 
 /* Logo sizing */
 .logo {
-  height: 144px;
+  height: 174px;
   width: auto;
   object-fit: contain;
   transition: transform 200ms ease, height 200ms ease, opacity 200ms ease;

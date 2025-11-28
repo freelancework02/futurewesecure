@@ -13,7 +13,7 @@ export default function BlogDetailVariantA() {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
 
-  const API_BASE = "http://futurewesecure.com/api/blogs";
+  const API_BASE = "https://futurewesecure.com/api/blogs";
 
   useEffect(() => {
     const fetchBlog = async () => {

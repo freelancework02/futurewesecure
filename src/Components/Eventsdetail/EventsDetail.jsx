@@ -11,7 +11,7 @@ import {
 } from "react-icons/fi";
 
 export default function EventsDetailVariantA() {
-  const API_BASE = "http://futurewesecure.com/api/events";
+  const API_BASE = "https://futurewesecure.com/api/events";
 
   const [event, setEvent] = useState(null);
   const [gallery, setGallery] = useState([]);

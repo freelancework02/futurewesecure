@@ -17,7 +17,7 @@ export default function EventsGalleryVariantB() {
   const [visibleIds, setVisibleIds] = useState(new Set());
   const observerRef = useRef(null);
 
-  const API_BASE = "http://futurewesecure.com/api/galleries";
+  const API_BASE = "https://futurewesecure.com/api/galleries";
 
   useEffect(() => {
     const fetchEvents = async () => {

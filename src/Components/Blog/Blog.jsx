@@ -8,7 +8,7 @@ export default function BlogVariantB() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const API_BASE = "http://futurewesecure.com/api/blogs";
+  const API_BASE = "https://futurewesecure.com/api/blogs";
 
   useEffect(() => {
     const fetchBlogs = async () => {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Mail, Phone, Calendar, ShieldCheck, MapPin } from "lucide-react";
-import emailjs from "emailjs-com";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import faqimg from "../../assets/faqimg.jpg"; // optional, referenced if needed
@@ -13,6 +12,9 @@ const ContactSection = () => {
     message: "",
     company: "", // honeypot
   });
+
+  const RECEIVER_EMAIL = "info@futurewesecure.com"; // <-- Receiver email
+
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,17 +24,19 @@ const ContactSection = () => {
 
   const validateForm = () => {
     const newErrors = {};
+
     if (!formData.name || formData.name.trim().length < 2) {
       newErrors.name = "Please enter your full name (at least 2 characters).";
     }
+
     const email = String(formData.email || "").trim();
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-    if (!emailOk) {
-      newErrors.email = "Please enter a valid email address.";
-    }
+    if (!emailOk) newErrors.email = "Please enter a valid email address.";
+
     if (!formData.message || formData.message.trim().length < 12) {
       newErrors.message = "Tell us a bit more (at least 12 characters).";
     }
+
     if (formData.company && formData.company.trim().length > 0) {
       newErrors.company = "Spam detected.";
     }
@@ -44,36 +48,48 @@ const ContactSection = () => {
   const handleChange = (e) =>
     setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  // UPDATED — Uses your backend API instead of EmailJS
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    const templateParams = {
-      from_name: formData.name,
+
+    const payload = {
+      name: formData.name,
       email: formData.email,
-      message: formData.message,
+      msg: formData.message,
+      receiver: RECEIVER_EMAIL, // <-- included
     };
 
-    emailjs
-      .send(
-        "service_o49f57q",
-        "template_zueof2i",
-        templateParams,
-        "_NCXgVXdplNNFVAvR"
-      )
-      .then(
-        (response) => {
-          toast.success("🎉 Thanks! Your message has been sent.");
-          setFormData({ name: "", email: "", message: "", company: "" });
-          setErrors({});
-        },
-        (error) => {
-          console.error(error);
-          toast.error("❌ Could not send your message. Please try again.");
-        }
-      )
-      .finally(() => setIsSubmitting(false));
+    try {
+      const res = await fetch("https://futurewesecure.com/api/contact/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        toast.success("🎉 Thanks! Your message has been sent.");
+
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+          company: "",
+        });
+        setErrors({});
+      } else {
+        toast.error(result.message || "❌ Could not send your message.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("❌ Server error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -121,8 +137,7 @@ const ContactSection = () => {
           </h2>
 
           <p className="mt-2 text-white/80 max-w-2xl mx-auto">
-            Send a message, chat on WhatsApp, or book a quick call—whatever works
-            best for you.
+            Send a message, chat on WhatsApp, or book a quick call—whatever works best for you.
           </p>
         </div>
 
@@ -153,101 +168,80 @@ const ContactSection = () => {
                 autoComplete="off"
               />
 
+              {/* NAME */}
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-semibold text-black mb-1.5"
-                >
+                <label className="block text-sm font-semibold text-black mb-1.5">
                   Full Name
                 </label>
                 <input
-                  id="name"
                   type="text"
                   name="name"
                   placeholder="Jane Doe"
+                  value={formData.name}
+                  onChange={handleChange}
                   className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${
                     errors.name
                       ? "border-red-300 focus:ring-red-400"
                       : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
                   }`}
-                  value={formData.name}
-                  onChange={handleChange}
-                  aria-invalid={!!errors.name}
-                  aria-describedby={errors.name ? "name-error" : undefined}
                 />
                 {errors.name && (
-                  <p id="name-error" className="text-red-600 text-sm mt-1" role="alert">
-                    {errors.name}
-                  </p>
+                  <p className="text-red-600 text-sm mt-1">{errors.name}</p>
                 )}
               </div>
 
+              {/* EMAIL */}
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-semibold text-black mb-1.5"
-                >
+                <label className="block text-sm font-semibold text-black mb-1.5">
                   Email
                 </label>
                 <input
-                  id="email"
                   type="email"
                   name="email"
                   placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
                   className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${
                     errors.email
                       ? "border-red-300 focus:ring-red-400"
                       : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
                   }`}
-                  value={formData.email}
-                  onChange={handleChange}
-                  aria-invalid={!!errors.email}
-                  aria-describedby={errors.email ? "email-error" : undefined}
                 />
                 {errors.email && (
-                  <p id="email-error" className="text-red-600 text-sm mt-1" role="alert">
-                    {errors.email}
-                  </p>
+                  <p className="text-red-600 text-sm mt-1">{errors.email}</p>
                 )}
               </div>
 
+              {/* MESSAGE */}
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-semibold text-black mb-1.5"
-                >
+                <label className="block text-sm font-semibold text-black mb-1.5">
                   Message
                 </label>
                 <textarea
-                  id="message"
                   name="message"
                   placeholder="How can we help?"
+                  value={formData.message}
+                  onChange={handleChange}
                   className={`w-full p-3 rounded-lg min-h-[140px] border outline-none focus:ring-2 resize-y transition ${
                     errors.message
                       ? "border-red-300 focus:ring-red-400"
                       : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
                   }`}
-                  value={formData.message}
-                  onChange={handleChange}
-                  aria-invalid={!!errors.message}
-                  aria-describedby={errors.message ? "message-error" : undefined}
                 />
                 {errors.message && (
-                  <p id="message-error" className="text-red-600 text-sm mt-1" role="alert">
-                    {errors.message}
-                  </p>
+                  <p className="text-red-600 text-sm mt-1">{errors.message}</p>
                 )}
               </div>
 
+              {/* SUBMIT */}
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className={`w-full py-3 rounded-xl font-semibold text-white transition-all flex items-center justify-center gap-2 ${
                   isSubmitting
                     ? "bg-orange-300 cursor-not-allowed"
                     : "bg-gradient-to-br from-[#f37021] to-[#d95800] hover:-translate-y-0.5"
                 }`}
-                disabled={isSubmitting}
-                aria-busy={isSubmitting}
                 style={{
                   boxShadow: isSubmitting
                     ? "none"
@@ -264,14 +258,15 @@ const ContactSection = () => {
                 )}
               </button>
 
-              <p id="form-errors" className="text-xs text-black/50 text-center" aria-live="polite">
+              <p className="text-xs text-black/50 text-center">
                 We respect your privacy. We’ll never share your details.
               </p>
             </form>
           </div>
 
-          {/* Contact Options */}
+          {/* Contact Info */}
           <div className="space-y-6 text-center md:text-left">
+            {/* Contact methods */}
             <div
               className="rounded-2xl p-6"
               style={{
@@ -280,7 +275,9 @@ const ContactSection = () => {
                 backdropFilter: "blur(6px)",
               }}
             >
-              <p className="text-lg font-medium mb-3 text-white">Prefer a quick conversation?</p>
+              <p className="text-lg font-medium mb-3 text-white">
+                Prefer a quick conversation?
+              </p>
 
               <div className="grid sm:grid-cols-2 gap-3">
                 <a
@@ -321,13 +318,13 @@ const ContactSection = () => {
                   })
                 }
                 className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold border border-white/50 text-black bg-white"
-                style={{ background: "white" }}
               >
                 <Calendar size={18} />
                 Book a Call
               </button>
             </div>
 
+            {/* Business Info */}
             <div
               className="rounded-2xl p-6"
               style={{
@@ -336,7 +333,9 @@ const ContactSection = () => {
                 backdropFilter: "blur(6px)",
               }}
             >
-              <h4 className="text-xl font-semibold mb-1 text-white">Future We Secure</h4>
+              <h4 className="text-xl font-semibold mb-1 text-white">
+                Future We Secure
+              </h4>
               <p className="text-white/90">📞 516-917-0756</p>
               <p className="text-white/90">📧 Info@futurewesecure.com</p>
 

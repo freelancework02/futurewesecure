@@ -4,11 +4,16 @@ import { Mail, Phone, Calendar, ShieldCheck, MapPin } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import faqimg from "../../assets/faqimg.jpg"; // optional, referenced if needed
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
+
     message: "",
     company: "", // honeypot
   });
@@ -32,6 +37,11 @@ const ContactSection = () => {
     const email = String(formData.email || "").trim();
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
     if (!emailOk) newErrors.email = "Please enter a valid email address.";
+
+    if (!formData.phone || formData.phone.replace(/\D/g, "").length < 10) {
+      newErrors.phone = "Please enter a valid phone number.";
+    }
+
 
     if (!formData.message || formData.message.trim().length < 12) {
       newErrors.message = "Tell us a bit more (at least 12 characters).";
@@ -58,6 +68,8 @@ const ContactSection = () => {
     const payload = {
       name: formData.name,
       email: formData.email,
+      phone: formData.phone,   // 👈 added
+
       msg: formData.message,
       receiver: RECEIVER_EMAIL, // <-- included
     };
@@ -179,11 +191,10 @@ const ContactSection = () => {
                   placeholder="Jane Doe"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${
-                    errors.name
-                      ? "border-red-300 focus:ring-red-400"
-                      : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
-                  }`}
+                  className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${errors.name
+                    ? "border-red-300 focus:ring-red-400"
+                    : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
+                    }`}
                 />
                 {errors.name && (
                   <p className="text-red-600 text-sm mt-1">{errors.name}</p>
@@ -201,16 +212,54 @@ const ContactSection = () => {
                   placeholder="you@example.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${
-                    errors.email
-                      ? "border-red-300 focus:ring-red-400"
-                      : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
-                  }`}
+                  className={`w-full p-3 rounded-lg border outline-none focus:ring-2 transition ${errors.email
+                    ? "border-red-300 focus:ring-red-400"
+                    : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
+                    }`}
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1">{errors.email}</p>
                 )}
               </div>
+
+              {/* PHONE */}
+              <div>
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-semibold text-slate-800 mb-1.5"
+                >
+                  Phone Number
+                </label>
+
+                <PhoneInput
+                  country={"in"}                 // default INDIA
+                  onlyCountries={["in", "us", "ca"]}
+                  preferredCountries={["in", "us", "ca"]}
+                  value={formData.phone}
+                  onChange={(phone) =>
+                    setFormData((s) => ({ ...s, phone }))
+                  }
+                  inputProps={{
+                    name: "phone",
+                    required: true,
+                  }}
+                  inputStyle={{
+                    width: "100%",
+                    height: "48px",
+                    borderRadius: "0.5rem",
+                    borderColor: errors.phone ? "#fca5a5" : "#cbd5e1",
+                  }}
+                  buttonStyle={{
+                    borderRadius: "0.5rem 0 0 0.5rem",
+                  }}
+                  containerClass="react-tel-input"
+                />
+
+                {errors.phone && (
+                  <p className="text-red-600 text-sm mt-1">{errors.phone}</p>
+                )}
+              </div>
+
 
               {/* MESSAGE */}
               <div>
@@ -222,11 +271,10 @@ const ContactSection = () => {
                   placeholder="How can we help?"
                   value={formData.message}
                   onChange={handleChange}
-                  className={`w-full p-3 rounded-lg min-h-[140px] border outline-none focus:ring-2 resize-y transition ${
-                    errors.message
-                      ? "border-red-300 focus:ring-red-400"
-                      : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
-                  }`}
+                  className={`w-full p-3 rounded-lg min-h-[140px] border outline-none focus:ring-2 resize-y transition ${errors.message
+                    ? "border-red-300 focus:ring-red-400"
+                    : "border-black/10 focus:ring-[rgba(243,112,33,0.18)]"
+                    }`}
                 />
                 {errors.message && (
                   <p className="text-red-600 text-sm mt-1">{errors.message}</p>
@@ -237,11 +285,10 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full py-3 rounded-xl font-semibold text-white transition-all flex items-center justify-center gap-2 ${
-                  isSubmitting
-                    ? "bg-orange-300 cursor-not-allowed"
-                    : "bg-gradient-to-br from-[#f37021] to-[#d95800] hover:-translate-y-0.5"
-                }`}
+                className={`w-full py-3 rounded-xl font-semibold text-white transition-all flex items-center justify-center gap-2 ${isSubmitting
+                  ? "bg-orange-300 cursor-not-allowed"
+                  : "bg-gradient-to-br from-[#f37021] to-[#d95800] hover:-translate-y-0.5"
+                  }`}
                 style={{
                   boxShadow: isSubmitting
                     ? "none"

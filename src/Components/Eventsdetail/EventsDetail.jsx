@@ -126,6 +126,10 @@ export default function EventsDetailVariantA() {
               style={{ background: "rgba(0,0,0,0.45)" }}>
               <FiCalendar />
               {displayDate(event.event_date)}
+
+               <span className="text-white">
+     {event.event_timezone}
+  </span>
             </div>
             <h1 className="mt-2 text-white text-lg font-extrabold truncate">
               {event.title}
@@ -181,7 +185,10 @@ export default function EventsDetailVariantA() {
           <h4 className="font-semibold text-black mb-4">Event Details</h4>
           <p className="text-sm text-black/70 mb-2">
             <FiCalendar className="inline mr-2" />
-            {displayDate(event.event_date)}
+            {displayDate(event.event_date)} 
+             <span className="text-black/70 ml-2">
+     {event.event_timezone}
+  </span>
           </p>
           <p className="text-sm text-black/70">
             <FiUser className="inline mr-2" />

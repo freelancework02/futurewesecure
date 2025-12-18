@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import Logo from "../../assets/Logo/logonew.png";
+import Logo from "../../assets/Logo/newlogonew.png";
 import "./Navbar.css";
 
 const Navbar = () => {

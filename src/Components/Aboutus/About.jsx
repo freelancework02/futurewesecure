@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../../assets/ashesh.jpeg";
+import image from "../../assets/asheshabout.jpeg";
 
 export default function AboutUs() {
   const orange = "#f37021";

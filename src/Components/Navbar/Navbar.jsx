@@ -56,10 +56,11 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-3 lg:px-6">
         <div className="flex items-center justify-between gap-4 py-3 md:py-4">
+
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-3 h-[56px] md:h-[64px]"
+            className="flex items-center gap-3 h-[70px] md:h-[90px]"
             aria-label="Future we secure - Home"
           >
             <img
@@ -125,6 +126,7 @@ const Navbar = () => {
         aria-modal="true"
       >
         <div className="relative h-full flex flex-col">
+
           {/* Drawer Header */}
           <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b">
             <Link
@@ -132,62 +134,63 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-3"
             >
-              <img src={Logo} alt="Future we secure" className="h-9 w-auto" />
+              {/* <img src={Logo} alt="Future we secure" className="h-12 w-auto" /> */}
               <span className="text-[var(--wp-text)] font-semibold">Future we secure</span>
             </Link>
 
-            <button
-              ref={closeBtnRef}
-              onClick={() => setIsOpen(false)}
-              className="p-2 rounded-xl"
-              aria-label="Close menu"
-            >
-              <AiOutlineClose className="text-3xl" style={{ color: "var(--wp-text)" }} />
-            </button>
-          </div>
-
-          {/* Drawer Content */}
-          <nav className="flex-1 overflow-y-auto">
-            <ul className="py-1 divide-y divide-slate-100">
-              {navLinks.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    aria-current={isActive(item.path) ? "page" : undefined}
-                    className={[
-                      "flex items-center justify-between",
-                      "px-5 py-4 text-base sm:text-[17px]",
-                      "nav-link--light mobile",
-                      isActive(item.path) ? "nav-link--active" : "",
-                    ].join(" ")}
-                  >
-                    <span>{item.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          {/* Drawer Footer (repeats nav links for quick access) */}
-          <div className="drawer-footer px-5 pt-3 pb-6 border-t bg-white rounded-md">
-            <ul className="space-y-2">
-              {navLinks.map((item) => (
-                <li key={item.name + "-footer"}>
-                  <Link
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 rounded-xl border border-slate-200 hover:bg-orange-50 transition"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <button
+            ref={closeBtnRef}
+            onClick={() => setIsOpen(false)}
+            className="p-2 rounded-xl"
+            aria-label="Close menu"
+          >
+            <AiOutlineClose className="text-3xl" style={{ color: "var(--wp-text)" }} />
+          </button>
         </div>
-      </aside>
-    </header>
+
+        {/* Drawer Content */}
+        <nav className="flex-1 overflow-y-auto">
+          <ul className="py-1 divide-y divide-slate-100">
+            {navLinks.map((item) => (
+              <li key={item.name}>
+                <Link
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  aria-current={isActive(item.path) ? "page" : undefined}
+                  className={[
+                    "flex items-center justify-between",
+                    "px-5 py-4 text-base sm:text-[17px]",
+                    "nav-link--light mobile",
+                    isActive(item.path) ? "nav-link--active" : "",
+                  ].join(" ")}
+                >
+                  <span>{item.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Drawer Footer */}
+        <div className="drawer-footer px-5 pt-3 pb-6 border-t bg-white rounded-md">
+          <ul className="space-y-2">
+            {navLinks.map((item) => (
+              <li key={item.name + "-footer"}>
+                <Link
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-3 rounded-xl border border-slate-200 hover:bg-orange-50 transition"
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+      </div>
+    </aside>
+  </header>
   );
 };
 

@@ -33,16 +33,16 @@
 
 /* Logo sizing */
 .logo {
-  height: 174px;
+  height: 180px;
   width: auto;
   object-fit: contain;
   transition: transform 200ms ease, height 200ms ease, opacity 200ms ease;
 }
 .logo--lg {
-  height: 180px;
+  height: 230px;
 }
 .logo--sm {
-  height: 160px;
+  height: 180px;
   transform: translateY(-1px);
 }
 
